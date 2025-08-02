@@ -103,6 +103,8 @@ require "nvim-treesitter.configs".setup({
 })
 require "oil".setup()
 
+vim.keymap.set('n', '<leader>sf', ":Pick buf_lines scope=\'current\'<CR>")
+vim.keymap.set('n', '<leader>sF', ":Pick buf_lines scope=\'all\'<CR>") -- might not be the best keybind for now. But very cool!
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 vim.keymap.set('n', '<leader>Q', ':Pick diagnostic scope=\'all\'<CR>')
@@ -124,3 +126,4 @@ vim.lsp.config('ols', {
 require "vague".setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
+
