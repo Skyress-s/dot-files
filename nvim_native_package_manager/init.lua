@@ -15,13 +15,15 @@ vim.o.winborder = "rounded"
 vim.o.clipboard = "unnamedplus"
 
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
-vim.keymap.set('n', '<leader>w', ':write<CR>')
-vim.keymap.set('n', '<leader>q', ':quit<CR>')
+vim.keymap.set('n', '<leader>w', ':w<CR>')
+vim.keymap.set('n', '<leader>W', ':wa<CR>')
+-- vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', 'dw', 'diw')
 vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true }) -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>')
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
 vim.keymap.set('n', '<leader><F9>', ':term odin run src/<CR>')
+-- vim.keymap.set('n', 'nn', 'vim.diagnostic.open_float()')
 
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
@@ -39,9 +41,9 @@ vim.pack.add({
 	{ src = 'https://github.com/nvim-lualine/lualine.nvim' },
 })
 
-require('lualine').setup()
+require('lualine').setup({})
 
-require('mini.extra').setup()
+require('mini.extra').setup({})
 
 require('leap').set_default_mappings() -- Super based
 
@@ -49,6 +51,7 @@ require('blink.cmp').setup({
 	-- fuzzy = { implementation = "prefer_rust_with_warning" },
 	fuzzy = { implementation = "lua" }, -- This should probably use rust instead. But lua is easier to compile. Will probably be slightly slower, but works fine for now!
 	-- build = 'cargo build --release',
+	signature = { enabled = true } -- TODO: Why is this not working currently?
 	-- version = '1.*'
 })
 
@@ -104,16 +107,16 @@ require "nvim-treesitter.configs".setup({
 require "oil".setup()
 
 vim.keymap.set('n', '<leader>sf', ":Pick buf_lines scope=\'current\'<CR>")
-vim.keymap.set('n', '<leader>sF', ":Pick buf_lines scope=\'all\'<CR>") -- might not be the best keybind for now. But very cool!
+vim.keymap.set('n', '<leader>sF', ":Pick buf_lines scope=\'all\'<CR>")
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 vim.keymap.set('n', '<leader>Q', ':Pick diagnostic scope=\'all\'<CR>')
 vim.keymap.set('n', '<leader>q', ':Pick diagnostic scope=\'current\'<CR>')
+
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 --vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition)
 vim.keymap.set('n', 'grd', vim.lsp.buf.definition)
-
 
 vim.lsp.enable({ "lua_ls", "biome", "tinymist", "emmetls", "ols" })
 
@@ -126,4 +129,3 @@ vim.lsp.config('ols', {
 require "vague".setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
-
