@@ -26,7 +26,10 @@ vim.keymap.set('n', '<leader><F9>', ':term odin run src/<CR>')
 -- vim.keymap.set('n', 'nn', 'vim.diagnostic.open_float()')
 
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
+	-- { src = "https://github.com/vague2k/vague.nvim" },
+	{ src = "https://github.com/folke/tokyonight.nvim" },
+	-- { src = "https://github.com/catppuccin/nvim" },
+	{ src = "https://github.com/rebelot/kanagawa.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/echasnovski/mini.extra" },
@@ -99,9 +102,10 @@ vim.lsp.config('lua_ls', {
 --})
 --vim.cmd("set completeopt+=noselect")
 
+
 require "mini.pick".setup()
 require "nvim-treesitter.configs".setup({
-	ensure_installed = { "svelte", "typescript", "javascript", "odin" },
+	ensure_installed = { "diff", "svelte", "typescript", "javascript", "odin" },
 	highlight = { enable = true }
 })
 require "oil".setup()
@@ -126,6 +130,16 @@ vim.lsp.config('ols', {
 	}
 })
 
-require "vague".setup({ transparent = true })
-vim.cmd("colorscheme vague")
-vim.cmd(":hi statusline guibg=NONE")
+-- require "vague".setup({ transparent = true })
+-- vim.cmd("colorscheme vague")
+-- vim.cmd(":hi statusline guibg=NONE")
+
+--require "catppuccin".setup({})
+--vim.cmd("colorscheme catppuccin-mocha")
+
+-- require "tokyonight".setup({})
+-- vim.cmd("colorscheme tokyonight-night") -- night moon storm day 
+
+require "kanagawa".setup({})
+vim.cmd("colorscheme kanagawa-wave") -- wave, dragon, lotus
+
