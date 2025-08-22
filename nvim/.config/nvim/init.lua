@@ -1,7 +1,9 @@
+-- <CTRL-w>d shows diagnostic
+
 vim.o.number = true
 vim.o.scrolloff = 8
 vim.o.relativenumber = true
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = 'yes'
 vim.o.termguicolors = true
 vim.o.wrap = false
 
@@ -10,9 +12,9 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = false
 
 vim.o.swapfile = false
-vim.g.mapleader = " "
-vim.o.winborder = "rounded"
-vim.o.clipboard = "unnamedplus"
+vim.g.mapleader = ' '
+vim.o.winborder = 'rounded'
+vim.o.clipboard = 'unnamedplus'
 
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
 vim.keymap.set('n', '<leader>w', ':w<CR>')
@@ -25,71 +27,88 @@ vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
 vim.keymap.set('n', '<leader><F9>', ':term odin run src/<CR>')
 -- vim.keymap.set('n', 'nn', 'vim.diagnostic.open_float()')
 
-vim.pack.add({
-	-- { src = "https://github.com/vague2k/vague.nvim" },
-	{ src = "https://github.com/folke/tokyonight.nvim" },
-	-- { src = "https://github.com/catppuccin/nvim" },
-	{ src = "https://github.com/rebelot/kanagawa.nvim" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/echasnovski/mini.pick" },
-	{ src = "https://github.com/echasnovski/mini.extra" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-	{ src = "https://github.com/neovim/nvim-lspconfig" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = 'https://github.com/mason-org/mason.nvim' },
-	{ src = 'https://github.com/mason-org/mason-lspconfig.nvim' },
-	{ src = 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim' },
-	{ src = 'https://github.com/Saghen/blink.cmp' },
-	{ src = 'https://github.com/ggandor/leap.nvim' },
-	{ src = 'https://github.com/nvim-lualine/lualine.nvim' },
+vim.pack.add {
+  -- { src = "https://github.com/vague2k/vague.nvim" },
+  { src = 'https://github.com/folke/tokyonight.nvim' },
+  -- { src = "https://github.com/catppuccin/nvim" },
+  { src = 'https://github.com/folke/which-key.nvim' },
+  { src = 'https://github.com/rebelot/kanagawa.nvim' },
+  { src = 'https://github.com/stevearc/oil.nvim' },
+  { src = 'https://github.com/echasnovski/mini.pick' },
+  { src = 'https://github.com/echasnovski/mini.extra' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/chomosuke/typst-preview.nvim' },
+  { src = 'https://github.com/mason-org/mason.nvim' },
+  { src = 'https://github.com/mason-org/mason-lspconfig.nvim' },
+  { src = 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim' },
+  { src = 'https://github.com/Saghen/blink.cmp' },
+  { src = 'https://github.com/ggandor/leap.nvim' },
+  { src = 'https://github.com/nvim-lualine/lualine.nvim' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
+}
+
+vim.diagnostic.config({
+	update_in_insert = true,
+
+})
+-- Autocommand to trigger diagnostics update on text change
+vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
+  callback = function()
+    vim.diagnostic.setloclist({ open = false }) -- optional: update loclist without opening
+  end,
 })
 
-require('lualine').setup({})
+require('treesitter-context').setup{}
 
-require('mini.extra').setup({})
+require('which-key').setup{
+}
+
+require('lualine').setup {}
+
+require('mini.extra').setup {}
 
 require('leap').set_default_mappings() -- Super based
 
-require('blink.cmp').setup({
-	-- fuzzy = { implementation = "prefer_rust_with_warning" },
-	fuzzy = { implementation = "lua" }, -- This should probably use rust instead. But lua is easier to compile. Will probably be slightly slower, but works fine for now!
-	-- build = 'cargo build --release',
-	signature = { enabled = true } -- TODO: Why is this not working currently?
-	-- version = '1.*'
-})
+require('blink.cmp').setup {
+  -- fuzzy = { implementation = "prefer_rust_with_warning" },
+  fuzzy = { implementation = 'lua' }, -- This should probably use rust instead. But lua is easier to compile. Will probably be slightly slower, but works fine for now!
+  -- build = 'cargo build --release',
+  signature = { enabled = true }, -- TODO: Why is this not working currently?
+  -- version = '1.*'
+}
 
 require('mason').setup()
 require('mason-lspconfig').setup()
-require('mason-tool-installer').setup({
-	ensure_installed = {
-		"lua_ls",
-		"stylua",
-		"ols"
-	}
-})
+require('mason-tool-installer').setup {
+  ensure_installed = {
+    'lua_ls',
+    'stylua',
+    'ols',
+  },
+}
 
 vim.lsp.config('lua_ls', {
-	settings = {
-		Lua = {
-			runtime = {
-				version = 'LuaJIT',
-			},
-			diagnostics = {
-				globals = {
-					'vim',
-					'require'
-				},
-			},
-			workspace = {
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {
+          'vim',
+          'require',
+        },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file('', true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
 })
-
 
 --
 --vim.api.nvim_create_autocmd('LspAttach', {
@@ -102,32 +121,32 @@ vim.lsp.config('lua_ls', {
 --})
 --vim.cmd("set completeopt+=noselect")
 
+require('mini.pick').setup()
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { 'diff', 'svelte', 'typescript', 'javascript', 'odin', 'cpp' },
+  highlight = { enable = true },
+}
+require('oil').setup()
 
-require "mini.pick".setup()
-require "nvim-treesitter.configs".setup({
-	ensure_installed = { "diff", "svelte", "typescript", "javascript", "odin" },
-	highlight = { enable = true }
-})
-require "oil".setup()
+vim.keymap.set('n', '<leader>sf', ":Pick buf_lines scope='current'<CR>")
+vim.keymap.set('n', '<leader>sF', ":Pick grep_live pattern=''<CR>")
+-- vim.keymap.set('n', '<leader>sF', ":Pick buf_lines scope='all'<CR>")
+vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
+vim.keymap.set('n', '<leader>h', ':Pick help<CR>')
+vim.keymap.set('n', '<leader>Q', ":Pick diagnostic scope='all'<CR>")
+vim.keymap.set('n', '<leader>q', ":Pick diagnostic scope='current'<CR>")
 
-vim.keymap.set('n', '<leader>sf', ":Pick buf_lines scope=\'current\'<CR>")
-vim.keymap.set('n', '<leader>sF', ":Pick buf_lines scope=\'all\'<CR>")
-vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
-vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
-vim.keymap.set('n', '<leader>Q', ':Pick diagnostic scope=\'all\'<CR>')
-vim.keymap.set('n', '<leader>q', ':Pick diagnostic scope=\'current\'<CR>')
-
-vim.keymap.set('n', '<leader>e', ":Oil<CR>")
+vim.keymap.set('n', '<leader>e', ':Oil<CR>')
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 --vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition)
 vim.keymap.set('n', 'grd', vim.lsp.buf.definition)
 
-vim.lsp.enable({ "lua_ls", "biome", "tinymist", "emmetls", "ols" })
+vim.lsp.enable { 'lua_ls', 'biome', 'tinymist', 'emmetls', 'ols', 'clangd' }
 
 vim.lsp.config('ols', {
-	init_options = {
-		enable_references = true
-	}
+  init_options = {
+    enable_references = true,
+  },
 })
 
 -- require "vague".setup({ transparent = true })
@@ -137,9 +156,10 @@ vim.lsp.config('ols', {
 --require "catppuccin".setup({})
 --vim.cmd("colorscheme catppuccin-mocha")
 
--- require "tokyonight".setup({})
--- vim.cmd("colorscheme tokyonight-night") -- night moon storm day 
+require "tokyonight".setup({})
+vim.cmd("colorscheme tokyonight-night") -- night moon storm day
 
-require "kanagawa".setup({})
-vim.cmd("colorscheme kanagawa-wave") -- wave, dragon, lotus
+-- require('kanagawa').setup {}
+-- vim.cmd 'colorscheme kanagawa-wave' -- wave, dragon, lotus
+
 
