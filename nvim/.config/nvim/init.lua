@@ -34,6 +34,9 @@ vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true, silent = true })
 --
 vim.keymap.set('n', '<leader>vr', ':Pick visit_paths<CR>')
 vim.keymap.set('n', '<leader>vl', ':Pick visit_labels<CR>')
+vim.keymap.set('n', '<leader>va', ':lua MiniVisits.add_label()<CR>')
+vim.keymap.set('n', '<leader>vd', ':lua MiniVisits.remove_label()<CR>')
+
 vim.keymap.set('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
 
 
@@ -62,7 +65,11 @@ vim.pack.add {
 }
 require('gitsigns').setup()
 require('mini.sessions').setup({})
-require('mini.visits').setup({})
+require('mini.visits').setup({
+	list = {
+
+	}
+})
 require('mini.pick').setup({})
 
 -- Override nvim normal ui.select function to use Mini.Pick's ui_select instead!
