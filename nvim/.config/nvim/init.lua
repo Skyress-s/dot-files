@@ -21,6 +21,7 @@ vim.keymap.set('n', '<leader>w', ':w<CR>')
 vim.keymap.set('n', '<leader>W', ':wa<CR>')
 -- vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', 'dw', 'diw')
+--vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true }) -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
 vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true }) -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>')
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
