@@ -57,7 +57,9 @@ vim.pack.add {
 	{ src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
 	{ src = 'https://github.com/nvim-mini/mini.sessions' },
 	{ src = 'https://github.com/nvim-mini/mini.visits' },
+	{ src = 'https://github.com/lewis6991/gitsigns.nvim' },
 }
+require('gitsigns').setup()
 require('mini.sessions').setup({})
 require('mini.visits').setup({})
 require('mini.pick').setup({})
