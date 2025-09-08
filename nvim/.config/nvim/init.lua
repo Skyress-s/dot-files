@@ -38,6 +38,14 @@ vim.keymap.set('n', '<leader>va', ':lua MiniVisits.add_label()<CR>')
 vim.keymap.set('n', '<leader>vd', ':lua MiniVisits.remove_label()<CR>')
 
 vim.keymap.set('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
+vim.keymap.set('n', '<leader>sa', function()
+	vim.ui.input({prompt ="Session Name: "}, function(input)
+		vim.cmd('lua MiniSessions.write("'.. input .. '")')
+
+	end
+	)
+end
+)
 
 
 vim.pack.add {
@@ -193,3 +201,4 @@ vim.cmd("colorscheme tokyonight-night") -- night moon storm day
 
 -- require('kanagawa').setup {}
 -- vim.cmd 'colorscheme kanagawa-wave' -- wave, dragon, lotus
+
