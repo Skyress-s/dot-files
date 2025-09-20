@@ -7,8 +7,8 @@ vim.o.signcolumn = 'yes'
 vim.o.termguicolors = true
 vim.o.wrap = false
 
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+vim.o.tabstop = 8
+vim.o.shiftwidth = 8
 vim.o.expandtab = false
 
 vim.o.swapfile = false
@@ -166,6 +166,7 @@ require('nvim-treesitter.configs').setup {
 	ensure_installed = { 'diff', 'svelte', 'typescript', 'javascript', 'odin', 'cpp' },
 	highlight = { enable = true },
 }
+
 require('oil').setup()
 
 vim.keymap.set('n', '<leader>sf', ":Pick buf_lines scope='current'<CR>")
