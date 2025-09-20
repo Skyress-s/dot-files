@@ -22,7 +22,7 @@ vim.keymap.set('n', '<leader>W', ':wa<CR>')
 -- vim.keymap.set('n', '<leader>q', ':quit<CR>')
 vim.keymap.set('n', 'dw', 'diw')
 --vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true }) -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
-vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true }) -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
+vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true })  -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
 vim.keymap.set('i', '<C-BS>', '<C-W>', { noremap = true }) -- How the fu*& is C-H Ctrl + Backspace?!?!? This work as ctrl + backspace in normal text editor
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y<CR>')
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
@@ -40,9 +40,8 @@ vim.keymap.set('n', '<leader>vd', ':lua MiniVisits.remove_label()<CR>')
 
 vim.keymap.set('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
 vim.keymap.set('n', '<leader>sa', function()
-	vim.ui.input({prompt ="Session Name: "}, function(input)
-		vim.cmd('lua MiniSessions.write("'.. input .. '")')
-
+	vim.ui.input({ prompt = "Session Name: " }, function(input)
+		vim.cmd('lua MiniSessions.write("' .. input .. '")')
 	end
 	)
 end
@@ -79,7 +78,24 @@ require('mini.visits').setup({
 
 	}
 })
-require('mini.pick').setup({})
+local win_config = function()
+	local height = math.floor(0.618 * vim.o.lines)
+	local width = math.floor(0.618 * vim.o.columns)
+	return {
+		anchor = 'NW',
+		height = height,
+		width = width,
+		row = math.floor(0.5 * (vim.o.lines - height)),
+		col = math.floor(1.0 * (vim.o.columns - width)),
+		-- col = 0
+	}
+end
+require('mini.pick').setup({
+	window = {
+		config = win_config()
+	}
+
+})
 
 -- Override nvim normal ui.select function to use Mini.Pick's ui_select instead!
 -- This means that other plugins that uses vim.ui.select will now appear here instead
@@ -116,7 +132,7 @@ require('blink.cmp').setup {
 	-- fuzzy = { implementation = "prefer_rust_with_warning" },
 	fuzzy = { implementation = 'lua' }, -- This should probably use rust instead. But lua is easier to compile. Will probably be slightly slower, but works fine for now!
 	-- build = 'cargo build --release',
-	signature = { enabled = true },  -- TODO: Why is this not working currently?
+	signature = { enabled = true }, -- TODO: Why is this not working currently?
 	-- version = '1.*'
 }
 
@@ -203,4 +219,3 @@ vim.cmd("colorscheme tokyonight-night") -- night moon storm day
 
 -- require('kanagawa').setup {}
 -- vim.cmd 'colorscheme kanagawa-wave' -- wave, dragon, lotus
-
