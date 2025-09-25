@@ -47,6 +47,41 @@ vim.keymap.set('n', '<leader>sa', function()
 end
 )
 
+vim.keymap.set('n', '<F10>', function()
+  local filepath = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.fnamemodify(filepath, ":p:h") -- directory
+  local filename = vim.fn.fnamemodify(filepath, ":t:r") -- file without extension
+  local ext = vim.fn.fnamemodify(filepath, ":e")
+
+  local alt_file = ""
+
+  if ext == "cpp" or ext == "cc" or ext == "cxx" then
+    -- Source -> Header
+    for _, header_ext in ipairs({".h", ".hpp", ".hh"}) do
+      local candidate = path .. "/" .. filename .. header_ext
+      if vim.fn.filereadable(candidate) == 1 then
+        alt_file = candidate
+        break
+      end
+    end
+  elseif ext == "h" or ext == "hpp" or ext == "hh" then
+    -- Header -> Source
+    for _, source_ext in ipairs({".cpp", ".cc", ".cxx"}) do
+      local candidate = path .. "/" .. filename .. source_ext
+      if vim.fn.filereadable(candidate) == 1 then
+        alt_file = candidate
+        break
+      end
+    end
+  end
+
+  if alt_file ~= "" then
+    vim.cmd("edit " .. alt_file)
+  else
+    print("No matching file found.")
+  end
+end, { desc = "Switch between .cpp and .h/.hpp files" })
+
 
 vim.pack.add {
 	-- { src = "https://github.com/vague2k/vague.nvim" },
@@ -143,6 +178,7 @@ require('mason-tool-installer').setup {
 		'lua_ls',
 		'stylua',
 		'ols',
+		'clangd',
 	},
 }
 
@@ -219,3 +255,4 @@ vim.cmd("colorscheme tokyonight-night") -- night moon storm day
 
 -- require('kanagawa').setup {}
 -- vim.cmd 'colorscheme kanagawa-wave' -- wave, dragon, lotus
+
