@@ -121,10 +121,11 @@ local win_config = function()
 		height = height,
 		width = width,
 		row = math.floor(0.5 * (vim.o.lines - height)),
-		col = math.floor(1.0 * (vim.o.columns - width)),
+		col = math.floor(0.5 * (vim.o.columns - width)),
 		-- col = 0
 	}
 end
+
 require('mini.pick').setup({
 	window = {
 		config = win_config()
@@ -224,6 +225,7 @@ require('oil').setup()
 
 vim.keymap.set('n', '<leader>sf', ":Pick buf_lines scope='current'<CR>")
 vim.keymap.set('n', '<leader>sF', ":Pick grep_live pattern=''<CR>")
+vim.keymap.set('n', '<leader>se', ":Pick files <CR>")
 -- vim.keymap.set('n', '<leader>sF', ":Pick buf_lines scope='all'<CR>")
 vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>')
