@@ -29,7 +29,7 @@ vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
 vim.keymap.set('n', '<leader><F9>', ':term odin run src/<CR>')
 -- vim.keymap.set('n', 'nn', 'vim.diagnostic.open_float()')
 --
-vim.api.nvim_set_keymap('n', 'd', '"dd', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'd', '"dd', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'x', '"_x', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'dd', '"ddd', {noremap = true, silent = true})
 --
@@ -257,4 +257,5 @@ vim.cmd("colorscheme tokyonight-night") -- night moon storm day
 
 -- require('kanagawa').setup {}
 -- vim.cmd 'colorscheme kanagawa-wave' -- wave, dragon, lotus
+
 
