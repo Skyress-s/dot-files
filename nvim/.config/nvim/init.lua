@@ -180,6 +180,7 @@ require('mason-tool-installer').setup {
 		'stylua',
 		'ols',
 		'clangd',
+		'csharp_ls',
 	},
 }
 
