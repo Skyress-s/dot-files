@@ -105,7 +105,9 @@ vim.pack.add {
 	{ src = 'https://github.com/nvim-mini/mini.sessions' },
 	{ src = 'https://github.com/nvim-mini/mini.visits' },
 	{ src = 'https://github.com/lewis6991/gitsigns.nvim' },
+	{ src = 'https://github.com/RRethy/vim-illuminate' },
 }
+require('illuminate').configure({})
 require('gitsigns').setup()
 require('mini.sessions').setup({})
 require('mini.visits').setup({
